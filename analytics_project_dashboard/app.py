@@ -4,27 +4,18 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 import plotly.express as px
 
-# ---------------------------------------------------
-# PAGE CONFIG (MUST BE FIRST STREAMLIT COMMAND)
-# ---------------------------------------------------
 st.set_page_config(
     page_title="Analytics Project Monitoring System",
     page_icon="📊",
     layout="wide"
 )
 
-# ---------------------------------------------------
-# HEADER
-# ---------------------------------------------------
 st.markdown("""
 # 📊 Analytics Project Lifecycle Monitoring System
 ### Real-Time Project Tracking | Risk Monitoring | Status Reporting
 ---
 """)
 
-# ---------------------------------------------------
-# LOAD DATA
-# ---------------------------------------------------
 data = pd.read_csv("project_data.csv")
 
 data["Start_Date"] = pd.to_datetime(data["Start_Date"])
@@ -32,9 +23,6 @@ data["End_Date"] = pd.to_datetime(data["End_Date"])
 
 today = pd.to_datetime(datetime.today().date())
 
-# ---------------------------------------------------
-# SIDEBAR FILTERS
-# ---------------------------------------------------
 st.sidebar.header("🔍 Filter Projects")
 
 team_filter = st.sidebar.selectbox(
@@ -55,14 +43,9 @@ if team_filter != "All":
 if status_filter != "All":
     filtered_data = filtered_data[filtered_data["Status"] == status_filter]
 
-# ---------------------------------------------------
-# OVERDUE DETECTION
-# ---------------------------------------------------
+
 filtered_data["Overdue"] = filtered_data["End_Date"] < today
 
-# ---------------------------------------------------
-# HEALTH SCORE LOGIC
-# ---------------------------------------------------
 def calculate_health(row):
     if row["Completion_Percentage"] == 100:
         return "🟢 Healthy"
@@ -75,16 +58,10 @@ def calculate_health(row):
 
 filtered_data["Health_Status"] = filtered_data.apply(calculate_health, axis=1)
 
-# ---------------------------------------------------
-# PROJECT OVERVIEW TABLE
-# ---------------------------------------------------
 st.markdown("## 📋 Project Overview")
 st.dataframe(filtered_data, use_container_width=True)
 st.markdown("---")
 
-# ---------------------------------------------------
-# KPI SECTION
-# ---------------------------------------------------
 total_projects = len(filtered_data)
 completed_projects = len(filtered_data[filtered_data["Status"] == "Completed"])
 delayed_projects = len(filtered_data[filtered_data["Status"] == "Delayed"])
@@ -101,9 +78,7 @@ col4.metric("High Risk", high_risk_projects)
 
 st.markdown("---")
 
-# ---------------------------------------------------
-# OVERDUE PROJECTS
-# ---------------------------------------------------
+
 st.markdown("## ⚠ Overdue Projects")
 
 overdue_projects = filtered_data[filtered_data["Overdue"] == True]
@@ -115,9 +90,6 @@ else:
 
 st.markdown("---")
 
-# ---------------------------------------------------
-# COMPLETION CHART
-# ---------------------------------------------------
 st.markdown("## 📈 Completion Progress Overview")
 
 fig, ax = plt.subplots(figsize=(10, 4))
@@ -147,9 +119,7 @@ gantt_chart.update_yaxes(autorange="reversed")
 st.plotly_chart(gantt_chart, use_container_width=True)
 
 st.markdown("---")
-# ---------------------------------------------------
-# WEEKLY SUMMARY
-# ---------------------------------------------------
+
 st.markdown("## 📝 Weekly Management Summary")
 
 on_track = len(filtered_data[filtered_data["Status"] == "On Track"])
@@ -171,9 +141,6 @@ st.info(summary)
 
 st.markdown("---")
 
-# ---------------------------------------------------
-# HEALTH OVERVIEW
-# ---------------------------------------------------
 st.markdown("## 🏥 Project Health Overview")
 
 st.dataframe(
@@ -185,4 +152,5 @@ st.dataframe(
         "Health_Status"
     ]],
     use_container_width=True
+
 )

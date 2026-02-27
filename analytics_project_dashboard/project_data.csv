@@ -1,0 +1,6 @@
+Project_ID,Project_Name,Team,Start_Date,End_Date,Status,Completion_Percentage,Risk_Level
+P001,Sales Dashboard,Analytics,2024-01-01,2024-02-15,On Track,70,Low
+P002,Customer Segmentation,Data Science,2024-01-10,2024-02-20,Delayed,40,High
+P003,Marketing Report Automation,BI Team,2024-01-15,2024-03-01,On Track,55,Medium
+P004,Revenue Forecast Model,Finance Analytics,2024-02-01,2024-03-15,At Risk,30,High
+P005,HR Performance Analysis,HR Analytics,2024-01-05,2024-02-28,Completed,100,Low

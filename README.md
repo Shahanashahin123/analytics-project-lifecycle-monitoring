@@ -85,7 +85,6 @@ analytics-project-lifecycle-monitoring/
 
 ## ▶️ How to Run Locally
 
-```bash
 pip install -r requirements.txt
 streamlit run app.py
 
@@ -102,5 +101,6 @@ Stakeholder reporting
 Timeline visualization
 
 Analytics-based decision support
+
 
 Structured project coordination thinking
